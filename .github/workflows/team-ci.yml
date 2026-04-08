@@ -1,0 +1,47 @@
+name: Team CI Pipeline
+
+on: [push, pull_request]
+
+jobs:
+  test-all-services:
+    runs-on: ubuntu-latest
+    
+    services:
+      postgres:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_DB: test
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+          
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      
+      - name: Test Catalogue
+        run: |
+          cd catalogue-service
+          npm install
+          DB_HOST=localhost node src/index.js &
+          sleep 3
+          npm test
+      
+      - name: Test Panier  
+        run: |
+          cd panier-service
+          npm install
+          REDIS_HOST=localhost node src/index.js &
+          sleep 3
+          npm test
+      
+      # Ajouter test Commandes si équipe 3+

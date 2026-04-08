@@ -1,1 +1,1 @@
-personne 1: aymane (tous)
+personne 1: aymane 

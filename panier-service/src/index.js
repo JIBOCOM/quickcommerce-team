@@ -24,7 +24,6 @@ const CATALOGUE_URL = process.env.CATALOGUE_SERVICE_URL || 'http://localhost:300
 app.get('/health', (req, res) => {
   res.json({ status: 'healthy', service: 'panier' });
 });
-
 // Ajouter au panier
 app.post('/cart/add', async (req, res) => {
   try {

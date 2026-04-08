@@ -22,6 +22,14 @@ app.use(express.json());
 const PANIER_URL = process.env.PANIER_SERVICE_URL || 'http://localhost:3002';
 const CATALOGUE_URL = process.env.CATALOGUE_SERVICE_URL || 'http://localhost:3001';
 
+app.get('/health', async (req, res) => {
+  try {
+    await db.query('SELECT 1');
+    res.json({ status: 'healthy', service: 'catalogue' });
+  } catch (error) {
+    res.status(500).json({ status: 'unhealthy' });
+  }
+});
 // Créer commande
 app.post('/orders', async (req, res) => {
   try {

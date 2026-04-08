@@ -22,6 +22,9 @@ app.use(express.json());
 const PANIER_URL = process.env.PANIER_SERVICE_URL || 'http://localhost:3002';
 const CATALOGUE_URL = process.env.CATALOGUE_SERVICE_URL || 'http://localhost:3001';
 
+app.get('/health', (req, res) => {
+  res.json({ status: 'healthy', service: 'commandes' });
+});
 // Créer commande
 app.post('/orders', async (req, res) => {
   try {
@@ -62,6 +65,15 @@ app.post('/orders', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+app.get('/version', (req, res) => {
+  res.json({ 
+    service: 'commandes', 
+    version: '1.0.1',
+    team: 'QuickCommerce Team NOM1-NOM2',
+    date: new Date().toISOString()
+  });
+});
+
 
 app.listen(PORT, () => {
   console.log(`📦 Commandes Service - Port ${PORT}`);

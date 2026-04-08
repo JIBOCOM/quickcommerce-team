@@ -21,14 +21,8 @@ app.use(express.json());
 
 // URL service Catalogue
 const CATALOGUE_URL = process.env.CATALOGUE_SERVICE_URL || 'http://localhost:3001';
-
-app.get('/health', async (req, res) => {
-  try {
-    await db.query('SELECT 1');
-    res.json({ status: 'healthy', service: 'catalogue' });
-  } catch (error) {
-    res.status(500).json({ status: 'unhealthy' });
-  }
+app.get('/health', (req, res) => {
+  res.json({ status: 'healthy', service: 'panier' });
 });
 
 // Ajouter au panier

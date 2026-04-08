@@ -59,6 +59,15 @@ app.get('/cart/:userId', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+app.get('/version', (req, res) => {
+  res.json({ 
+    service: 'panier', 
+    version: '1.0.1',
+    team: 'QuickCommerce Team aymane ',
+    date: new Date().toISOString()
+  });
+});
+
 
 app.listen(PORT, () => {
   console.log(`🛒 Panier Service - Port ${PORT}`);
